@@ -155,8 +155,8 @@ def main():
     C = db.cursor()
     
     while True:
-        log = input("For Admin: A, Exit: X ::: ")
-        if log.upper() == "A":
+        log = input("For LOGIN: L, Exit: X ::: ")
+        if log.upper() == "L":
             while True:
                 menu = input('''Add Table: AT, View Tables: VT, Add Menu Item: AMI, View Menu Items: VMI, Record Order: RO, View Orders: VO, Exit: X ::: ''')
                 if menu.upper() == 'AT':
