@@ -4,10 +4,12 @@ from datetime import datetime
 passwrd = None
 db = None  
 C = None
+db = pymysql.connect(host="localhost", user="root", password=passwrd,auth_plugin='mysql_native_password')
 
 def base_check():
+    global db
     check = 0
-    db = pymysql.connect(host="localhost", user="root", password=passwrd)
+    
     cursor = db.cursor()
     cursor.execute('SHOW DATABASES')
     result = cursor.fetchall()
@@ -20,7 +22,8 @@ def base_check():
         create_database()
 
 def table_check():
-    db = pymysql.connect(host="localhost", user="root", password=passwrd)
+    global db
+    
     cursor = db.cursor()
     cursor.execute('SHOW DATABASES')
     result = cursor.fetchall()
@@ -36,8 +39,9 @@ def table_check():
                     print('      Booting systems...')
 
 def create_database():
+    global db
     try:
-        db = pymysql.connect(host="localhost", user="root", password=passwrd)
+        
         cursor = db.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS restaurant_management")
         db.commit()
@@ -47,8 +51,8 @@ def create_database():
         print(f"Error creating database: {str(e)}")
 
 def create_tables():
+    global db
     try:
-        db = pymysql.connect(host="localhost", user="root", password=passwrd, database="restaurant_management")
         cursor = db.cursor()
         
         cursor.execute("""
@@ -86,6 +90,7 @@ def create_tables():
         print(f"Error creating tables: {str(e)}")
 
 def add_table():
+    global db
     table_id = int(input("Enter Table ID: "))
     seats = int(input("Enter Number of Seats: "))
     data = (table_id, seats)
@@ -151,7 +156,7 @@ def main():
     table_check()
     
     global db, C
-    db = pymysql.connect(host="localhost", user="root", password=passwrd, database="restaurant_management")
+    db = pymysql.connect(host="localhost", user="root", password=passwrd, database="restaurant_management",auth_plugin='mysql_native_password')
     C = db.cursor()
     
     while True:
